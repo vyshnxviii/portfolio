@@ -113,7 +113,7 @@ body{background:var(--paper);color:var(--ink);font-family:'Plus Jakarta Sans',sa
 .h-btns{display:flex;gap:.85rem;flex-wrap:wrap;margin-bottom:2.2rem}
 .btn-rose{background:var(--rose);color:#fff;border:none;font-size:.73rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:.78rem 2rem;border-radius:50px;text-decoration:none;cursor:none;transition:all .25s;display:inline-block;box-shadow:0 6px 24px var(--rose-glow)}
 .btn-rose:hover{background:var(--ink);color:#fff;transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.18)}
-.btn-outline{background:transparent;border:1.5px solid var(--rose-line);color:var(--rose);font-size:.73rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:.78rem 2rem;border-radius:50px;text-decoration:none;cursor:none;transition:all .25s;display:inline-block}
+.btn-outline{background:transparent;border:1.5px solid var(--rose-line);color:var(--rose);font-size:.73rem;font-weight:700;letter-spacing:.09em;padding:.78rem 2rem;border-radius:50px;text-decoration:none;cursor:none;transition:all .25s;display:inline-block}
 .btn-outline:hover{background:var(--rose-glow);transform:translateY(-3px)}
 .h-links{display:flex;gap:1.5rem}
 .h-links a{font-size:.75rem;color:var(--ink-60);text-decoration:none;font-weight:500;transition:color .2s;cursor:none;display:flex;align-items:center;gap:.35rem}
@@ -134,7 +134,13 @@ body{background:var(--paper);color:var(--ink);font-family:'Plus Jakarta Sans',sa
 }
 @keyframes ringPulse{0%,100%{box-shadow:0 0 0 12px rgba(212,69,106,.07),0 20px 60px rgba(212,69,106,.18)}50%{box-shadow:0 0 0 20px rgba(212,69,106,.04),0 20px 80px rgba(212,69,106,.25)}}
 .photo-ring .inner{width:100%;height:100%;border-radius:50%;overflow:hidden;background:var(--paper-mid)}
-.photo-ring img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
+.photo-ring img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:65% 25%;   /* UPDATED: was "top center" — recenters crop on the face/body instead of empty foliage */
+  display:block;
+}
 
 /* glowing colour blobs below (ref1 inspired) */
 .glow-1{
@@ -294,7 +300,16 @@ body{background:var(--paper);color:var(--ink);font-family:'Plus Jakarta Sans',sa
 .cico{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--ink-25);display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0;transition:border-color .2s,color .2s}
 .cont-list a:hover .cico{border-color:var(--rose);color:var(--rose)}
 .photo-block{position:relative}
-.photo-block img{width:100%;max-width:360px;border-radius:var(--radius);display:block;box-shadow:0 24px 60px rgba(0,0,0,.14)}
+.photo-block img{
+  width:100%;
+  max-width:360px;
+  aspect-ratio:4/5;              /* NEW: forces a consistent portrait crop instead of the full tall image */
+  object-fit:cover;              /* NEW */
+  object-position:center 75%;    /* NEW: pulls the crop down toward the seated figure, trimming excess tree/sky */
+  border-radius:var(--radius);
+  display:block;
+  box-shadow:0 24px 60px rgba(0,0,0,.14);
+}
 .photo-block::after{content:'';position:absolute;top:14px;left:14px;right:-14px;bottom:-14px;border:1.5px solid var(--rose-line);border-radius:var(--radius);z-index:-1}
 
 /* ═══ THREE canvas for contact sphere ═══ */
