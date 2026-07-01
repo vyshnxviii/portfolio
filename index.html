@@ -231,6 +231,23 @@ body{background:var(--paper);color:var(--ink);font-family:'Plus Jakarta Sans',sa
 .sk-t{background:var(--paper-mid);border:1px solid var(--ink-25);color:var(--ink-60);font-family:'DM Mono',monospace;font-size:.69rem;padding:.27rem .72rem;border-radius:50px;transition:all .2s}
 .sk-t:hover{background:var(--rose-glow);border-color:var(--rose-line);color:var(--rose)}
 
+/* ── About: restructured grid ── */
+.ab-grid{display:grid;grid-template-columns:1fr 1px 1fr;gap:3rem;align-items:start}
+.ab-divider{align-self:stretch;background:linear-gradient(to bottom,transparent,var(--ink-25) 12%,var(--ink-25) 88%,transparent)}
+.ab-subhead{display:flex;align-items:center;gap:.6rem;font-size:.68rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--denim);margin-bottom:1.3rem}
+.ab-subhead::before{content:'';width:1.3rem;height:1.5px;background:var(--denim);flex-shrink:0}
+.ab-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem;margin-top:1.9rem}
+.stat-c .stat-ic{display:block;font-size:1.05rem;color:var(--rose);margin-bottom:.55rem}
+.sk-block{margin-bottom:1.5rem}
+.sk-block:last-child{margin-bottom:0}
+.sk-block .sk-cat{display:flex;align-items:center;gap:.5rem}
+.sk-block .sk-cat i{font-size:.85rem;color:var(--sage)}
+@media(max-width:991px){
+  .ab-grid{grid-template-columns:1fr}
+  .ab-divider{display:none}
+  .ab-col+.ab-col{margin-top:.5rem}
+}
+
 /* ═══ EXPERIENCE ═══ */
 .tl{position:relative;padding-left:2.5rem}
 .tl::before{content:'';position:absolute;left:0;top:.4rem;bottom:0;width:1.5px;background:linear-gradient(to bottom,var(--rose),rgba(212,69,106,.1))}
@@ -242,6 +259,10 @@ body{background:var(--paper);color:var(--ink);font-family:'Plus Jakarta Sans',sa
 .tl-pts{list-style:none}
 .tl-pts li{font-size:.83rem;color:var(--ink-60);line-height:1.78;padding-left:1.3rem;position:relative;margin-bottom:.48rem;font-weight:300}
 .tl-pts li::before{content:'▸';position:absolute;left:0;color:var(--rose);font-size:.7rem}
+.tl-more{position:relative;padding-top:.3rem;margin-top:-1rem}
+.tl-dot-more{position:absolute;left:-2.5rem;top:0;width:7px;height:7px;background:var(--ink-60);border-radius:50%}
+.tl-more-link{display:inline-flex;align-items:center;gap:.4rem;font-size:.76rem;color:var(--ink-60);text-decoration:none;font-weight:500;letter-spacing:.02em;transition:color .2s;padding-top:.15rem}
+.tl-more-link:hover{color:var(--rose)}
 
 /* ═══ PROJECTS ═══ */
 .pj-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:1.25rem}
@@ -302,15 +323,54 @@ body{background:var(--paper);color:var(--ink);font-family:'Plus Jakarta Sans',sa
 .photo-block{position:relative}
 .photo-block img{
   width:100%;
-  max-width:360px;
-  aspect-ratio:4/5;              /* NEW: forces a consistent portrait crop instead of the full tall image */
-  object-fit:cover;              /* NEW */
-  object-position:center 75%;    /* NEW: pulls the crop down toward the seated figure, trimming excess tree/sky */
+  max-width:460px;               /* widened to suit a landscape crop */
+  aspect-ratio:3/2;              /* UPDATED: landscape crop instead of portrait 4/5 */
+  object-fit:cover;
+  object-position:center 65%;    /* recentered so the seated figure stays framed in the wider crop */
   border-radius:var(--radius);
   display:block;
   box-shadow:0 24px 60px rgba(0,0,0,.14);
 }
 .photo-block::after{content:'';position:absolute;top:14px;left:14px;right:-14px;bottom:-14px;border:1.5px solid var(--rose-line);border-radius:var(--radius);z-index:-1}
+
+/* ═══ CONTACT FORM ═══ */
+.cf-wrap{
+  margin-top:4rem;
+  background:var(--paper-card);
+  border:1px solid var(--ink-25);
+  border-radius:var(--radius);
+  padding:3rem;
+}
+.cf-head{margin-bottom:2rem}
+.cf-title{font-family:'Playfair Display',serif;font-size:1.7rem;font-weight:900;color:var(--ink);margin-bottom:.4rem}
+.cf-sub{font-size:.83rem;color:var(--ink-60);font-weight:300}
+.cf-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem}
+.cf-field{display:flex;flex-direction:column;gap:.45rem}
+.cf-field label{font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--sage)}
+.cf-field label span{color:var(--ink-60);text-transform:none;font-weight:400;letter-spacing:normal}
+.cf-field input{
+  background:var(--paper-mid);
+  border:1.5px solid var(--ink-25);
+  border-radius:10px;
+  padding:.75rem 1rem;
+  font-family:'Plus Jakarta Sans',sans-serif;
+  font-size:.86rem;
+  color:var(--ink);
+  outline:none;
+  transition:border-color .2s,box-shadow .2s;
+  cursor:auto;
+}
+.cf-field input::placeholder{color:var(--ink-60);opacity:.6}
+.cf-field input:focus{border-color:var(--rose-line);box-shadow:0 0 0 3px var(--rose-glow)}
+.cf-submit{grid-column:1/-1;justify-self:start;margin-top:.5rem;cursor:none;border:none}
+.cf-submit:disabled{opacity:.6;pointer-events:none}
+.cf-status{grid-column:1/-1;font-size:.82rem;font-weight:500;min-height:1.2rem}
+.cf-status.ok{color:var(--sage)}
+.cf-status.err{color:var(--rose)}
+@media(max-width:767px){
+  .cf-wrap{padding:1.8rem}
+  .cf-grid{grid-template-columns:1fr}
+}
 
 /* ═══ THREE canvas for contact sphere ═══ */
 #sphereC{position:absolute;right:-70px;bottom:-50px;width:200px;height:200px;pointer-events:none;opacity:.35}
@@ -320,9 +380,6 @@ footer{padding:1.8rem 3.5rem;border-top:1.5px solid var(--ink-25);display:flex;j
 footer strong{color:var(--rose)}
 
 /* ═══ API badge ═══ */
-.api-b{position:fixed;bottom:1rem;right:1.3rem;z-index:400;font-family:'DM Mono',monospace;font-size:.61rem;padding:.27rem .72rem;border-radius:20px;background:var(--paper-card);border:1px solid var(--rose-line);color:var(--rose);letter-spacing:.07em;box-shadow:0 2px 12px rgba(0,0,0,.06)}
-.api-b.live::before{content:'● ';color:#22c55e}
-.api-b.mock::before{content:'● ';color:var(--denim)}
 
 /* ═══ REVEAL ═══ */
 .rv{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
@@ -362,7 +419,6 @@ footer strong{color:var(--rose)}
     <li><a href="#about">About</a></li>
     <li><a href="#experience">Experience</a></li>
     <li><a href="#projects">Projects</a></li>
-    <li><a href="#education">Education</a></li>
     <li><a href="#blog">Blog</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
@@ -465,62 +521,71 @@ footer strong{color:var(--rose)}
   <div class="slabel rv">About</div>
   <h2 class="stitle rv">The person behind<br>the pull requests</h2>
   <div class="sbar rv"></div>
-  <div class="row g-5">
-    <div class="col-lg-6">
-      <div class="ab-body rv">
-        <p>I'm an Integrated MTech student in <strong>Computer Science &amp; Business Analytics</strong> at VIT Chennai, graduating July 2026 — where systems thinking meets data storytelling.</p>
-        <p>At <strong>Infosys</strong>, I built a full-stack Training &amp; Certificate Management System from the ground up: 45+ REST APIs, 700+ unit tests, Jenkins CI/CD, and a compliance reporting module that HR teams actually rely on.</p>
-        <p>Outside of work I run <strong>Bridge the Byte</strong> — where gnarly backend concepts get the analogy treatment. If I can't explain it simply, I don't know it well enough yet.</p>
+
+  <div class="ab-grid">
+    <div class="ab-col rv">
+      <div class="ab-subhead">Who I am</div>
+      <div class="ab-body">
+        <p><strong>Software Engineer &amp; Data Analyst</strong> with a background in full-stack development and data storytelling.</p>
+        <p>Currently at <strong>Infosys</strong>, building production-grade backend systems and data-driven tools.</p>
+        <p>Outside of work I run <strong>Bridge the Byte</strong> — where backend concepts get the analogy treatment.</p>
       </div>
-      <div class="row g-3 mt-3">
-        <div class="col-6"><div class="stat-c rv"><div class="stat-n">45+</div><div class="stat-l">REST APIs shipped</div></div></div>
-        <div class="col-6"><div class="stat-c rv"><div class="stat-n">700+</div><div class="stat-l">Unit tests written</div></div></div>
-        <div class="col-6"><div class="stat-c rv"><div class="stat-n">90%+</div><div class="stat-l">SonarQube coverage</div></div></div>
-        <div class="col-6"><div class="stat-c rv"><div class="stat-n">8.19</div><div class="stat-l">CGPA out of 10</div></div></div>
+      <div class="ab-stats">
+        <div class="stat-c"><i class="bi bi-hdd-network stat-ic"></i><div class="stat-n">45+</div><div class="stat-l">REST APIs shipped</div></div>
+        <div class="stat-c"><i class="bi bi-check2-square stat-ic"></i><div class="stat-n">700+</div><div class="stat-l">Unit tests written</div></div>
+        <div class="stat-c"><i class="bi bi-shield-check stat-ic"></i><div class="stat-n">90%+</div><div class="stat-l">SonarQube coverage</div></div>
       </div>
     </div>
-    <div class="col-lg-6 rv">
-      <div class="sk-cat">Languages</div>
-      <div class="sk-wrap"><span class="sk-t">Python</span><span class="sk-t">Java</span><span class="sk-t">SQL</span><span class="sk-t">R</span><span class="sk-t">TypeScript</span></div>
-      <div class="sk-cat">Backend</div>
-      <div class="sk-wrap"><span class="sk-t">Spring Boot</span><span class="sk-t">Spring Security</span><span class="sk-t">JPA/Hibernate</span><span class="sk-t">REST APIs</span><span class="sk-t">Microservices</span><span class="sk-t">Kafka</span></div>
-      <div class="sk-cat">Data &amp; Analytics</div>
-      <div class="sk-wrap"><span class="sk-t">Pandas</span><span class="sk-t">NumPy</span><span class="sk-t">Scikit-learn</span><span class="sk-t">XGBoost</span><span class="sk-t">SHAP</span><span class="sk-t">Prophet</span><span class="sk-t">Power BI</span><span class="sk-t">Tableau</span><span class="sk-t">A/B Testing</span></div>
-      <div class="sk-cat">Databases</div>
-      <div class="sk-wrap"><span class="sk-t">MySQL</span><span class="sk-t">PostgreSQL</span><span class="sk-t">SQLite</span></div>
-      <div class="sk-cat">Tools</div>
-      <div class="sk-wrap"><span class="sk-t">Git/GitHub</span><span class="sk-t">Jenkins CI/CD</span><span class="sk-t">Docker</span><span class="sk-t">SonarQube</span><span class="sk-t">Angular</span><span class="sk-t">Agile/Scrum</span></div>
+
+    <div class="ab-divider"></div>
+
+    <div class="ab-col rv">
+      <div class="ab-subhead">What I work with</div>
+      <div class="sk-block">
+        <div class="sk-cat"><i class="bi bi-code-slash"></i>Languages</div>
+        <div class="sk-wrap"><span class="sk-t">Python</span><span class="sk-t">Java</span><span class="sk-t">SQL</span><span class="sk-t">R</span><span class="sk-t">TypeScript</span></div>
+      </div>
+      <div class="sk-block">
+        <div class="sk-cat"><i class="bi bi-server"></i>Backend</div>
+        <div class="sk-wrap"><span class="sk-t">Spring Boot</span><span class="sk-t">Spring Security</span><span class="sk-t">JPA/Hibernate</span><span class="sk-t">REST APIs</span><span class="sk-t">Microservices</span><span class="sk-t">Kafka</span></div>
+      </div>
+      <div class="sk-block">
+        <div class="sk-cat"><i class="bi bi-bar-chart-line"></i>Data &amp; Analytics</div>
+        <div class="sk-wrap"><span class="sk-t">Pandas</span><span class="sk-t">NumPy</span><span class="sk-t">Scikit-learn</span><span class="sk-t">XGBoost</span><span class="sk-t">SHAP</span><span class="sk-t">Prophet</span><span class="sk-t">Power BI</span><span class="sk-t">Tableau</span><span class="sk-t">A/B Testing</span></div>
+      </div>
+      <div class="sk-block">
+        <div class="sk-cat"><i class="bi bi-database"></i>Databases</div>
+        <div class="sk-wrap"><span class="sk-t">MySQL</span><span class="sk-t">PostgreSQL</span><span class="sk-t">SQLite</span></div>
+      </div>
+      <div class="sk-block">
+        <div class="sk-cat"><i class="bi bi-tools"></i>Tools</div>
+        <div class="sk-wrap"><span class="sk-t">Git/GitHub</span><span class="sk-t">Jenkins CI/CD</span><span class="sk-t">Docker</span><span class="sk-t">SonarQube</span><span class="sk-t">Angular</span><span class="sk-t">Agile/Scrum</span></div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- ══════════ EXPERIENCE ══════════ -->
 <section id="experience" class="sect">
-  <div class="slabel rv">Experience</div>
-  <h2 class="stitle rv">Where I've worked</h2>
+  <div class="slabel rv">Currently</div>
+  <h2 class="stitle rv">What I'm doing<br>right now</h2>
   <div class="sbar rv"></div>
   <div class="tl">
     <div class="tl-item rv">
       <div class="tl-dot"></div>
-      <div class="tl-date">Jan 2026 – Present</div>
+      <div class="tl-date">Recently</div>
       <div class="tl-co">Infosys · Mysore</div>
       <div class="tl-role">Software Engineering Intern</div>
       <ul class="tl-pts">
-        <li>Designed and built <strong>45+ REST APIs</strong> (Spring Boot, JPA, Spring Security) powering a full-stack employee training system, including a compliance reporting module consumed by HR for enrollment and completion analytics.</li>
-        <li>Engineered bulk CSV data-processing logic for enrollment workflows; built attendance &amp; assessment reporting by translating stakeholder requirements into clean data structures.</li>
-        <li>Achieved <strong>90%+ SonarQube Quality Gate</strong> with 700+ JUnit 5/Mockito unit tests; identified and resolved a critical security vulnerability before production release.</li>
-        <li>Set up <strong>Jenkins CI/CD pipeline</strong> automating build, test, and package stages across a 5-member Agile team through 2 sprints.</li>
+        <li>Built <strong>45+ REST APIs</strong> (Spring Boot, JPA, Spring Security) for a full-stack employee training system used by HR.</li>
+        <li>Maintained <strong>90%+ SonarQube coverage</strong> with 700+ unit tests and set up a Jenkins CI/CD pipeline.</li>
       </ul>
     </div>
-    <div class="tl-item rv">
-      <div class="tl-dot"></div>
-      <div class="tl-date">Sep 2024 – Jan 2025</div>
-      <div class="tl-co">Noorrank · Abu Dhabi (Remote)</div>
-      <div class="tl-role">Web Developer (Part-time)</div>
-      <ul class="tl-pts">
-        <li>Built Noorrank's public-facing website using HTML, CSS, and JavaScript with responsive layouts and cross-browser compatibility.</li>
-        <li>Worked directly with stakeholders to translate business requirements into web deliverables, maintaining consistent design language.</li>
-      </ul>
+    <div class="tl-more rv">
+      <div class="tl-dot-more"></div>
+      <div class="tl-dot-more" style="top:1.5rem;opacity:.6"></div>
+      <div class="tl-dot-more" style="top:2.7rem;opacity:.3"></div>
+      <a href="https://linkedin.com/in/vyshnaviv18" target="_blank" class="tl-more-link">See full experience timeline on LinkedIn <i class="bi bi-arrow-up-right"></i></a>
     </div>
   </div>
 </section>
@@ -531,24 +596,6 @@ footer strong{color:var(--rose)}
   <h2 class="stitle rv">Things I've built</h2>
   <div class="sbar rv"></div>
   <div id="pjGrid" class="pj-grid"></div>
-</section>
-
-<!-- ══════════ EDUCATION ══════════ -->
-<section id="education" class="sect">
-  <div class="slabel rv">Education</div>
-  <h2 class="stitle rv">Academic background</h2>
-  <div class="sbar rv"></div>
-  <div class="edu-c rv"><div class="edu-yr">2021–2026</div><div><div class="edu-inst">Vellore Institute of Technology, Chennai</div><div class="edu-deg">Integrated MTech · Computer Science (Business Analytics)</div></div><div class="edu-sc">8.19</div></div>
-  <div class="edu-c rv"><div class="edu-yr">May 2021</div><div><div class="edu-inst">Bhavans Vidya Mandir, Elamakkara</div><div class="edu-deg">Class XII · Mathematics, Physics, Computer Science, Chemistry</div></div><div class="edu-sc">95.6%</div></div>
-  <div class="edu-c rv"><div class="edu-yr">May 2019</div><div><div class="edu-inst">Sri Sri Ravishankar Vidya Mandir, Kochi</div><div class="edu-deg">Class X</div></div><div class="edu-sc">92%</div></div>
-  <div class="mt-4 rv">
-    <div class="slabel mb-2">Certifications</div>
-    <div class="sk-wrap">
-      <span class="sk-t">Human Resource Analytics — Coursera (Mar 2025)</span>
-      <span class="sk-t">Java: Beyond the Basic Features — Infosys (Jun 2026)</span>
-      <span class="sk-t">Prompt Engineering for GenAI — LinkedIn Learning (Aug 2023)</span>
-    </div>
-  </div>
 </section>
 
 <!-- ══════════ BLOG ══════════ -->
@@ -588,13 +635,42 @@ footer strong{color:var(--rose)}
       </div>
     </div>
   </div>
+
+  <!-- WANT TO KNOW MORE / CONTACT FORM -->
+  <div class="cf-wrap rv">
+    <div class="cf-head">
+      <div class="cf-title">Want to know more?</div>
+      <div class="cf-sub">Drop your details below and I'll get back to you directly.</div>
+    </div>
+    <form id="contactForm" class="cf-grid">
+      <div class="cf-field">
+        <label for="cfName">Name</label>
+        <input type="text" id="cfName" name="Name" placeholder="Your full name" required>
+      </div>
+      <div class="cf-field">
+        <label for="cfPhone">Phone <span>(optional)</span></label>
+        <input type="tel" id="cfPhone" name="Phone" placeholder="+91 XXXXX XXXXX">
+      </div>
+      <div class="cf-field">
+        <label for="cfCompany">Company</label>
+        <input type="text" id="cfCompany" name="Company" placeholder="Where you work" required>
+      </div>
+      <div class="cf-field">
+        <label for="cfEmail">Email</label>
+        <input type="email" id="cfEmail" name="Email" placeholder="you@company.com" required>
+      </div>
+      <button type="submit" class="cf-submit btn-rose">
+        <span class="cf-btn-text">Send Message</span>
+      </button>
+      <div class="cf-status" id="cfStatus"></div>
+    </form>
+  </div>
 </section>
 
 <footer>
   <span>© 2026 <strong>Vyshnavi V</strong> · Built with Angular · Spring Boot · Three.js · Bootstrap</span>
   <span>Kochi · Chennai · Mysore</span>
 </footer>
-<div class="api-b mock" id="apiBadge">API: Mock Mode</div>
 
 <!-- SCRIPTS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -617,8 +693,6 @@ const PortfolioService={
     try{
       const r=await fetch(this.BASE_URL+'/projects',{signal:AbortSignal.timeout(2200)});
       if(!r.ok)throw 0;
-      document.getElementById('apiBadge').textContent='API: Live';
-      document.getElementById('apiBadge').classList.replace('mock','live');
       return await r.json();
     }catch{return this.projects}
   }
@@ -702,6 +776,44 @@ if(ps){
     ps.style.transition='none';
   });
   ps.addEventListener('mouseleave',()=>{ps.style.transform='';ps.style.transition='transform .7s ease'});
+}
+
+/* ── Contact form → emails vyshnaviv18@gmail.com via FormSubmit.co ── */
+const cForm=document.getElementById('contactForm');
+if(cForm){
+  cForm.addEventListener('submit',async e=>{
+    e.preventDefault();
+    const btn=cForm.querySelector('.cf-submit');
+    const btnText=cForm.querySelector('.cf-btn-text');
+    const status=document.getElementById('cfStatus');
+    const original=btnText.textContent;
+    btn.disabled=true;btnText.textContent='Sending...';status.textContent='';status.className='cf-status';
+
+    const payload={
+      Name:cForm.Name.value,
+      Phone:cForm.Phone.value||'Not provided',
+      Company:cForm.Company.value,
+      Email:cForm.Email.value,
+      _subject:'New portfolio inquiry from '+cForm.Name.value
+    };
+
+    try{
+      const res=await fetch('https://formsubmit.co/ajax/vyshnaviv18@gmail.com',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','Accept':'application/json'},
+        body:JSON.stringify(payload)
+      });
+      if(!res.ok)throw new Error('Request failed');
+      status.textContent="Thanks! Your message has been sent — I'll get back to you soon.";
+      status.classList.add('ok');
+      cForm.reset();
+    }catch(err){
+      status.textContent="Something went wrong. Please email vyshnaviv18@gmail.com directly.";
+      status.classList.add('err');
+    }finally{
+      btn.disabled=false;btnText.textContent=original;
+    }
+  });
 }
 
 /* ── Loader ── */
